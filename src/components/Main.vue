@@ -18,14 +18,7 @@
     <b-container fluid>
       <b-row>
         <b-col>
-          <div class="panel__right-section">
-            <div class="w-100">
-              <b-dropdown id="dropdown-farmacia" :text="activePharmacy.length > 0 ? activePharmacy: 'Farmacia'" variant="primary" class="m-2 w-100">
-                <b-dropdown-item @click="setFilterByName('')" :active="activePharmacy === ''">Todas</b-dropdown-item>
-                <b-dropdown-item v-for="(pharmacy, index) in pharmacyNames" :key="index" :active="pharmacy == activePharmacy" @click="setFilterByName(pharmacy)">{{pharmacy}}</b-dropdown-item>
-              </b-dropdown>
-            </div>
-          </div>
+          <PanelHeader></PanelHeader>
         </b-col>
         <b-col cols="12" lg="8">Panel B</b-col>
       </b-row>
@@ -35,23 +28,21 @@
 
 <script>
 import axios from 'axios';
-
+import PanelHeader from './PanelHeader';
 
 export default {
-  name: 'MainSearchmap',
+  name: 'Main',
   props: {
     title: String
+  },
+  components: {
+    PanelHeader
   },
   data() {
     return {
       pharmacyList: [],
-      communeList: [],
-      pharmacyNames: [],
       activePharmacy: ''
     }
-  },
-  created() {
-    this.getLocales();
   },
   methods: {
     getLocales() {
@@ -107,35 +98,5 @@ a:focus
 }
 
 
-/* Panel Izquierdo */
-.panel__right-section {
-  width: 100%;
-  max-width: 250px;
-}
-.panel__right-section #dropdown-farmacia .btn {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.panel__right-section #dropdown-farmacia .dropdown-menu.show {
-  overflow-y: auto !important;
-  overflow: hidden;
-  height: 300px !important;
-  width: 120%
-}
-.panel__right-section #dropdown-farmacia .dropdown-menu li {
-  display: block;
-} 
-.panel__right-section #dropdown-farmacia .dropdown-menu li a {
-  text-transform: uppercase;
-  white-space: pre-wrap;
-}
-.panel__right-section #dropdown-farmacia .dropdown-toggle {
-  padding-right: 1rem;
-}
-.panel__right-section #dropdown-farmacia .dropdown-toggle::after {
-  right: 6px;
-  top: 50%;
-  transform: translateY(-50%);
-}
+
 </style>

@@ -1,16 +1,16 @@
 <template>
   <div id="app">
-    <MainSearchmap title="Sucursales operativas"/>
+    <Main title="Sucursales operativas"/>
   </div>
 </template>
 
 <script>
-import MainSearchmap from './components/MainSearchmap.vue'
+import Main from './components/Main.vue'
 
 export default {
   name: 'App',
   components: {
-    MainSearchmap
+    Main
   }
 }
 </script>
