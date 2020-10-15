@@ -9,12 +9,12 @@
 
 <script>
 import GoogleMapsApiLoader from "google-maps-api-loader";
+import { mapGetters } from 'vuex';
 
 export default {
     name: 'PanelMap',
     props: {
       apiKey: String,
-      locations: Array
     },
     data() {
         return {
@@ -78,6 +78,11 @@ export default {
 			});
 		},
     },
+    computed: {
+        ...mapGetters({
+            locations: 'filteredLocations'
+        })
+    },
     watch: {
         locations(newLocations) {
 			var self = this;
@@ -86,7 +91,7 @@ export default {
 			newLocations.forEach(function(location) {
 				self.createMarker(location);
             });
-            self.centerMap(parseFloat(newLocations[0].local_lat), parseFloat(newLocations[0].local_lng));
+            this.centerMap(parseFloat(newLocations[0].local_lat), parseFloat(newLocations[0].local_lng));
 			//self.markerListeners(self.markers); // añadir evento de click a los pines
 			//self.positionMarker = null;
 

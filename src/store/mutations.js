@@ -7,5 +7,8 @@ export const mutations = {
     },
     updateActivePharmacy(state, payload) {
         state.activePharmacy = payload;
+    },
+    updateActiveCommune(state, payload) {
+        state.activeCommune = payload;
     }
 }

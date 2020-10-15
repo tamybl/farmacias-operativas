@@ -32,45 +32,51 @@
         data() {
             return {
                 publicPath: process.env.BASE_URL,
-                activePharmacy: '',
-                activeCommune: '',
+                //activePharmacy: '',
+                //activeCommune: '',
                 logo: logo
             }
         },
-        computed: mapState({
-            pharmacyList: state => state.pharmacyList,
-            pharmacyNames(state) {
-                return state.pharmacyList.reduce((acc, currentPharmacy) => {
-                    if(!acc.includes(currentPharmacy.local_nombre.trim())) {
-                        acc.push(currentPharmacy.local_nombre.trim());
+        computed: {
+            ...mapState({
+                pharmacyList: state => state.pharmacyList,
+                activePharmacy: 'activePharmacy',
+                activeCommune: 'activeCommune',
+                pharmacyNames(state) {
+                    return state.pharmacyList.reduce((acc, currentPharmacy) => {
+                        if(!acc.includes(currentPharmacy.local_nombre.trim())) {
+                            acc.push(currentPharmacy.local_nombre.trim());
+                        }
+                        return acc;  
+                    }, [])
+                    .sort((a, b) => {
+                        return a.localeCompare(b);
+                    })
+                },
+                locationNames(state) {
+                    return state.pharmacyList.reduce((acc, currentPharmacy) => {
+                    if(!acc.includes(currentPharmacy.comuna_nombre.trim())) {
+                        acc.push(currentPharmacy.comuna_nombre.trim());
                     }
                     return acc;  
-                }, [])
-                .sort((a, b) => {
-                    return a.localeCompare(b);
-                })
-            },
-            locationNames(state) {
-                return state.pharmacyList.reduce((acc, currentPharmacy) => {
-                if(!acc.includes(currentPharmacy.comuna_nombre.trim())) {
-                    acc.push(currentPharmacy.comuna_nombre.trim());
+                    }, [])
                 }
-                return acc;  
-            }, [])
-            }
-        }),
+            }),
+        },
         created() {
             this.$store.dispatch('getLocals');
         },
         methods: {
             ...mapActions([
-                'getLocals'
+                'getLocals',
+                'setFilterName',
+                'setFilterCommune',
             ]),
             setFilterByName(selected) {
-                this.activePharmacy = selected;
+                this.$store.dispatch('setFilterName', selected);
             },
             setFilterByCommune(selected) {
-                this.activeCommune = selected;
+                this.$store.dispatch('setFilterCommune', selected);
             }
         }
     }

@@ -1,15 +1,15 @@
 <template>
-  <main>
+  <main class="h-100">
     <b-container fluid v-show="loading" class="bg-white h-100">
       <Loader></Loader>
     </b-container>
-    <b-container fluid class="" v-show="!loading">
-      <b-row>
+    <b-container fluid class="h-100" v-show="!loading">
+      <b-row class="h-100">
         <b-col md="auto" class="p-0">
           <PanelHeader></PanelHeader>
         </b-col>
         <b-col class="overflow-hidden">
-          <PanelMap apiKey="AIzaSyCrybSM3nR50QrLYBQCzLY-x2VPlNfAswc" :locations="locations"></PanelMap>
+          <PanelMap apiKey="AIzaSyCrybSM3nR50QrLYBQCzLY-x2VPlNfAswc"></PanelMap>
         </b-col>
       </b-row>
     </b-container>
@@ -20,7 +20,7 @@
 import PanelHeader from './PanelHeader'
 import PanelMap from './PanelMap'
 import Loader from './Loader'
-import { mapGetters, mapState } from 'vuex'
+import { mapState } from 'vuex'
 
 export default {
   name: 'Main',
@@ -40,9 +40,6 @@ export default {
   computed: {
     ...mapState({
       loading: 'loading'
-    }),
-    ...mapGetters({
-      locations: 'filteredLocations'
     })
   },
   methods: {
@@ -70,7 +67,5 @@ a:focus
 {
 	outline: 3px auto -webkit-focus-ring-color !important;
 }
-
-
 
 </style>

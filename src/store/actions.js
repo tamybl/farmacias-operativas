@@ -8,13 +8,13 @@ export const actions = {
         .then((response) => {
             commit('updateLocals', response.data); 
             commit('loadingStatus', false);
-            //this.pharmacyList = response.data;
-            //this.getCommunes();
-            //this.getPharmacyNames();
         })
     },
     setFilterName({commit}, pharmacy) {
         commit('updateActivePharmacy', pharmacy); 
+    },
+    setFilterCommune({commit}, commune) {
+        commit('updateActiveCommune', commune); 
     }
     
 }

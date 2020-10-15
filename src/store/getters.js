@@ -1,14 +1,11 @@
 export const getters = {
     filteredLocations: state => {
-        const filtered = (arr, key) => {
-            arr.filter(arrItem => {
-                arrItem[key] == state.activePharmacy;
-            })
+        const filtered = (arr, key, val) => {
+            return arr.filter(arrItem => arrItem[key].trim() === val)
         }
-        var filteredByPharmacy = state.activePharmacy === '' ? state.pharmacyList :  filtered(state.pharmacyList, 'local_nombre');
-        var filteredByCommune = state.activePharmacy === '' ? state.pharmacyList :  filtered(filteredByPharmacy, 'local_nombre');
-        
+        var filteredByPharmacy = state.activePharmacy === '' ? state.pharmacyList :  filtered(state.pharmacyList, 'local_nombre', state.activePharmacy);
+        var filteredByCommune = state.activeCommune === '' ? filteredByPharmacy :  filtered(filteredByPharmacy, 'comuna_nombre', state.activeCommune);
+
         return filteredByCommune;
-        //return state.pharmacyList.filter(pharmacy => pharmacy.local_nombre.trim() == state.activePharmacy);
-    },
+    }
 }
