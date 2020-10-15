@@ -1,34 +1,25 @@
 <template>
-  <section class="hello">
-    <div>
-      <b-navbar type="dark" variant="dark">
-        <b-navbar-nav>
-          <b-nav-item>{{title}}</b-nav-item>
-          <b-nav-item href="#">Home</b-nav-item>
-
-
-
-          <b-nav-item-dropdown text="User" right>
-            <b-dropdown-item href="#">Account</b-dropdown-item>
-            <b-dropdown-item href="#">Settings</b-dropdown-item>
-          </b-nav-item-dropdown>
-        </b-navbar-nav>
-      </b-navbar>
-    </div>
-    <b-container fluid>
+  <main>
+    <b-container fluid v-show="loading">
+      <h2>Loading</h2>
+    </b-container>
+    <b-container fluid class="" v-show="!loading">
       <b-row>
-        <b-col>
+        <b-col md="auto" class="p-0">
           <PanelHeader></PanelHeader>
         </b-col>
-        <b-col cols="12" lg="8">Panel B</b-col>
+        <b-col class="overflow-hidden">
+          <PanelMap apiKey="AIzaSyCrybSM3nR50QrLYBQCzLY-x2VPlNfAswc" :locations="locations"></PanelMap>
+        </b-col>
       </b-row>
     </b-container>
-  </section>
+  </main>
 </template>
 
 <script>
-import axios from 'axios';
 import PanelHeader from './PanelHeader';
+import PanelMap from './PanelMap';
+import { mapState } from 'vuex';
 
 export default {
   name: 'Main',
@@ -36,42 +27,19 @@ export default {
     title: String
   },
   components: {
-    PanelHeader
+    PanelHeader,
+    PanelMap
   },
   data() {
     return {
-      pharmacyList: [],
       activePharmacy: ''
     }
-  },
+  }, 
+  computed: mapState({
+    loading: 'loading',
+    locations: state => state.pharmacyList
+  }),
   methods: {
-    getLocales() {
-      axios.get('https://farmanet.minsal.cl/maps/index.php/ws/getLocalesRegion?id_region=7')
-      .then((response) => {
-        this.pharmacyList = response.data;
-        this.getCommunes();
-        this.getPharmacyNames();
-      })
-    },
-    getCommunes() {
-      this.communeList = this.pharmacyList.reduce((acc, currentPharmacy) => {
-        if(!acc.includes(currentPharmacy.comuna_nombre)) {
-            acc.push(currentPharmacy.comuna_nombre);
-          }
-        return acc;  
-      }, [])
-    },
-    getPharmacyNames() {
-      this.pharmacyNames = this.pharmacyList.reduce((acc, currentPharmacy) => {
-        if(!acc.includes(currentPharmacy.local_nombre.trim())) {
-            acc.push(currentPharmacy.local_nombre.trim());
-          }
-        return acc;  
-      }, [])
-    },
-    setFilterByName(selected) {
-      this.activePharmacy = selected;
-    }
   }
 }
 </script>

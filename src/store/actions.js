@@ -12,6 +12,9 @@ export const actions = {
             //this.getCommunes();
             //this.getPharmacyNames();
         })
+    },
+    setFilterName({commit}, pharmacy) {
+        commit('updateActivePharmacy', pharmacy); 
     }
     
 }

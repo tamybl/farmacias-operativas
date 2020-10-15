@@ -1,6 +1,6 @@
 export const state = {
     pharmacyList: [],
-    //communeList: [],
-    //pharmacyNames: [],
+    activePharmacy: '',
+    activeCommune: '',
     loading: true
 }

@@ -1,8 +1,11 @@
 export const mutations = {
-    updateLocals (state, locals) {
-        state.pharmacyList = locals;
+    updateLocals (state, payload) {
+        state.pharmacyList = payload;
     },
-    loadingStatus(state, loading) {
-        state.loading = loading;
+    loadingStatus(state, payload) {
+        state.loading = payload;
+    },
+    updateActivePharmacy(state, payload) {
+        state.activePharmacy = payload;
     }
 }
