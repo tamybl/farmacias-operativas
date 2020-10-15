@@ -1,7 +1,7 @@
 <template>
   <main>
-    <b-container fluid v-show="loading">
-      <h2>Loading</h2>
+    <b-container fluid v-show="loading" class="bg-white h-100">
+      <Loader></Loader>
     </b-container>
     <b-container fluid class="" v-show="!loading">
       <b-row>
@@ -17,9 +17,10 @@
 </template>
 
 <script>
-import PanelHeader from './PanelHeader';
-import PanelMap from './PanelMap';
-import { mapState } from 'vuex';
+import PanelHeader from './PanelHeader'
+import PanelMap from './PanelMap'
+import Loader from './Loader'
+import { mapGetters, mapState } from 'vuex'
 
 export default {
   name: 'Main',
@@ -28,17 +29,22 @@ export default {
   },
   components: {
     PanelHeader,
-    PanelMap
+    PanelMap,
+    Loader
   },
   data() {
     return {
-      activePharmacy: ''
+
     }
   }, 
-  computed: mapState({
-    loading: 'loading',
-    locations: state => state.pharmacyList
-  }),
+  computed: {
+    ...mapState({
+      loading: 'loading'
+    }),
+    ...mapGetters({
+      locations: 'filteredLocations'
+    })
+  },
   methods: {
   }
 }
