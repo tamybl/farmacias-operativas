@@ -65,6 +65,9 @@
                     }
                     return acc;  
                 }, [])
+                .sort((a, b) => {
+                    return a.localeCompare(b);
+                })
             }
         },
         created() {
