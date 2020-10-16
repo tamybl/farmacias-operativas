@@ -25,7 +25,7 @@
 </template>
 
 <script>
-    import { mapState, mapActions } from 'vuex';
+    import { mapState, mapActions, mapGetters } from 'vuex';
     import logo from './../assets/logo-fo-map.png';
     export default {
         name: 'PanelHeader',
@@ -42,26 +42,30 @@
                 pharmacyList: state => state.pharmacyList,
                 activePharmacy: 'activePharmacy',
                 activeCommune: 'activeCommune',
-                pharmacyNames(state) {
-                    return state.pharmacyList.reduce((acc, currentPharmacy) => {
-                        if(!acc.includes(currentPharmacy.local_nombre.trim())) {
-                            acc.push(currentPharmacy.local_nombre.trim());
-                        }
-                        return acc;  
-                    }, [])
-                    .sort((a, b) => {
-                        return a.localeCompare(b);
-                    })
-                },
-                locationNames(state) {
-                    return state.pharmacyList.reduce((acc, currentPharmacy) => {
+            }),
+            ...mapGetters({
+                filteredLocationsPharmacy: 'filteredLocationsPharmacy',
+                filteredLocationsCommune: 'filteredLocationsCommune'
+            }),
+            pharmacyNames() {
+                return this.filteredLocationsCommune.reduce((acc, currentPharmacy) => {
+                    if(!acc.includes(currentPharmacy.local_nombre.trim())) {
+                        acc.push(currentPharmacy.local_nombre.trim());
+                    }
+                    return acc;  
+                }, [])
+                .sort((a, b) => {
+                    return a.localeCompare(b);
+                })
+            },
+            locationNames() {
+                return this.filteredLocationsPharmacy.reduce((acc, currentPharmacy) => {
                     if(!acc.includes(currentPharmacy.comuna_nombre.trim())) {
                         acc.push(currentPharmacy.comuna_nombre.trim());
                     }
                     return acc;  
-                    }, [])
-                }
-            }),
+                }, [])
+            }
         },
         created() {
             this.$store.dispatch('getLocals');

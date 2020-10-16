@@ -10,6 +10,7 @@
 <script>
 import GoogleMapsApiLoader from "google-maps-api-loader";
 import { mapGetters } from 'vuex';
+import pinFarmacia from './../assets/pinDefault-farmacia.svg'
 
 export default {
     name: 'PanelMap',
@@ -24,9 +25,8 @@ export default {
 			gMap: null,
 			initialLatitude: -33.4398976,
 			initialLongitude:  -70.6549467,
-			pinSucursal: {
-				default: 'https://d3eu402qemtr97.cloudfront.net/uploads/2030f05f-60f6-44c5-94b3-40dbb72f7cb9/original/pinDefault-sucursal.svg',
-				active: 'https://d3eu402qemtr97.cloudfront.net/uploads/326974fb-1097-43df-a0c2-2d5aa2900d9b/original/pinActive-sucursal.svg',
+			pinPharmacy: {
+				default: pinFarmacia,
             },
             pharmacyActive: '',
 			positionMarker: null
@@ -58,9 +58,9 @@ export default {
 			var self = this;
 			var marker = new self.google.maps.Marker({
 				position: { lat: parseFloat(location.local_lat) , lng: parseFloat(location.local_lng) },
-				icon: self.pinSucursal.default,
+				icon: self.pinPharmacy.default,
 				map: self.gMap,
-				size: new self.google.maps.Size(100, 100),
+                size: new self.google.maps.Size(120, 120),
 				title: location.local_nombre
 			});
 			self.markers.push(marker);
@@ -80,7 +80,7 @@ export default {
     },
     computed: {
         ...mapGetters({
-            locations: 'filteredLocations'
+            locations: 'filteredLocationsMap'
         })
     },
     watch: {

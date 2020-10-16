@@ -1,5 +1,12 @@
 export const getters = {
-    filteredLocations: state => {
+    filteredLocationsPharmacy: state => {
+       
+        return state.activePharmacy === '' ? state.pharmacyList : state.pharmacyList.filter(pharmacyItem => pharmacyItem.local_nombre.trim() === state.activePharmacy);
+    },
+    filteredLocationsCommune: state => {
+        return state.activeCommune === '' ? state.pharmacyList : state.pharmacyList.filter(pharmacyItem => pharmacyItem.comuna_nombre.trim() === state.activeCommune);
+    },
+    filteredLocationsMap: state => {
         const filtered = (arr, key, val) => {
             return arr.filter(arrItem => arrItem[key].trim() === val)
         }
